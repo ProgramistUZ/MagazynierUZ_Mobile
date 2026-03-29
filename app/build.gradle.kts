@@ -1,8 +1,11 @@
+import com.android.build.api.dsl.ApplicationExtension
+
 plugins {
     alias(libs.plugins.android.application)
 }
 
-android {
+
+configure<ApplicationExtension> {
     namespace = "com.example.magazynieruz_mobile"
     compileSdk {
         version = release(36)
