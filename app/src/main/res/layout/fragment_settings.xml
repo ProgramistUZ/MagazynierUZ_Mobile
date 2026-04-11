@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_white"
+    android:padding="34dp">
+
+    <TextView
+        android:id="@+id/textSettingsTitle"
+        android:layout_width="match_parent"
+        android:layout_height="61dp"
+        android:gravity="center"
+        android:text="@string/nav_settings"
+        android:textColor="@color/text_primary"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/btnLogout"
+        android:layout_width="match_parent"
+        android:layout_height="61dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="40dp"
+        android:background="@drawable/bg_button_primary"
+        android:text="@string/btn_logout"
+        android:textColor="@color/text_primary"
+        android:textSize="20sp"
+        android:textAllCaps="true" />
+
+</RelativeLayout>
