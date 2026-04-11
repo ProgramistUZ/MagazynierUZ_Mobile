@@ -14,4 +14,9 @@
     <string name="error_user_not_found">Nie znaleziono użytkownika</string>
     <string name="error_wrong_password">Nieprawidłowe hasło</string>
     <string name="success_registration">Rejestracja udana</string>
+    <string name="nav_warehouse">Magazyny</string>
+    <string name="nav_scan">Skaner</string>
+    <string name="nav_home">Home</string>
+    <string name="nav_notifications">Powiadomienia</string>
+    <string name="nav_settings">Ustawienia</string>
 </resources>
