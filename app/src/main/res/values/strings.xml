@@ -1,3 +1,17 @@
 <resources>
     <string name="app_name">MagazynierUZ_Mobile</string>
+    <string name="tab_login">LOGIN</string>
+    <string name="tab_register">REGISTER</string>
+    <string name="hint_login">LOGIN</string>
+    <string name="hint_password">PASSWORD</string>
+    <string name="hint_confirm_password">CONFIRM PASSWORD</string>
+    <string name="btn_login">LOGIN</string>
+    <string name="btn_register">REGISTER</string>
+    <string name="welcome_message">Witaj, %1$s</string>
+    <string name="error_empty_fields">Wypełnij wszystkie pola</string>
+    <string name="error_passwords_mismatch">Hasła się nie zgadzają</string>
+    <string name="error_username_taken">Nazwa użytkownika jest zajęta</string>
+    <string name="error_user_not_found">Nie znaleziono użytkownika</string>
+    <string name="error_wrong_password">Nieprawidłowe hasło</string>
+    <string name="success_registration">Rejestracja udana</string>
 </resources>
