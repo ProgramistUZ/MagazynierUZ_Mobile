@@ -6,7 +6,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import com.example.magazynieruz_mobile.ui.HomeFragment;
+import com.example.magazynieruz_mobile.ui.NotificationsFragment;
+import com.example.magazynieruz_mobile.ui.ScanFragment;
 import com.example.magazynieruz_mobile.ui.SettingsFragment;
+import com.example.magazynieruz_mobile.ui.WarehouseFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
@@ -31,6 +34,15 @@ public class MainActivity extends AppCompatActivity {
             int id = item.getItemId();
             if (id == R.id.nav_home) {
                 loadFragment(HomeFragment.newInstance(username));
+                return true;
+            } else if (id == R.id.nav_warehouse) {
+                loadFragment(new WarehouseFragment());
+                return true;
+            } else if (id == R.id.nav_scan) {
+                loadFragment(new ScanFragment());
+                return true;
+            } else if (id == R.id.nav_notifications) {
+                loadFragment(new NotificationsFragment());
                 return true;
             } else if (id == R.id.nav_settings) {
                 loadFragment(new SettingsFragment());
