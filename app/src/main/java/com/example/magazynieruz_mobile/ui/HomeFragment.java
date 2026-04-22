@@ -1,6 +1,8 @@
 package com.example.magazynieruz_mobile.ui;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,10 +16,8 @@ import com.example.magazynieruz_mobile.R;
 import com.example.magazynieruz_mobile.data.AppDatabase;
 import com.example.magazynieruz_mobile.data.Product;
 import com.example.magazynieruz_mobile.data.ProductDao;
-import com.example.magazynieruz_mobile.data.Warehouse;
 import com.example.magazynieruz_mobile.data.WarehouseDao;
 
-import java.util.List;
 import java.util.Locale;
 
 public class HomeFragment extends Fragment {
@@ -58,31 +58,26 @@ public class HomeFragment extends Fragment {
         AppDatabase db = AppDatabase.getInstance(requireContext());
         ProductDao productDao = db.productDao();
         WarehouseDao warehouseDao = db.warehouseDao();
+        Handler mainHandler = new Handler(Looper.getMainLooper());
+        String noData = getString(R.string.no_data);
 
-        textTotalProducts.setText(String.valueOf(productDao.getTotalProductCount()));
-        textLowStock.setText(String.valueOf(productDao.getLowStockCount()));
-        textTotalWarehouses.setText(String.valueOf(warehouseDao.getWarehouseCount()));
+        AppDatabase.databaseExecutor.execute(() -> {
+            int totalProducts = productDao.getTotalProductCount();
+            int lowStock = productDao.getLowStockCount();
+            int totalWarehouses = warehouseDao.getWarehouseCount();
+            double inventoryValue = productDao.getTotalInventoryValue();
+            Product topProduct = productDao.getTopProduct();
+            String topWarehouseName = productDao.getTopWarehouseName();
 
-        double inventoryValue = productDao.getTotalInventoryValue();
-        textInventoryValue.setText(String.format(Locale.getDefault(), "%.2f zł", inventoryValue));
-
-        Product topProduct = productDao.getTopProduct();
-        textTopProduct.setText(topProduct != null ? topProduct.name : getString(R.string.no_data));
-
-        List<Warehouse> warehouses = warehouseDao.getAllWarehouses();
-        if (!warehouses.isEmpty()) {
-            int maxCount = 0;
-            String topName = getString(R.string.no_data);
-            for (Warehouse w : warehouses) {
-                int count = productDao.getProductsByWarehouse(w.id).size();
-                if (count > maxCount) {
-                    maxCount = count;
-                    topName = w.name;
-                }
-            }
-            textTopWarehouse.setText(topName);
-        } else {
-            textTopWarehouse.setText(getString(R.string.no_data));
-        }
+            mainHandler.post(() -> {
+                if (!isAdded()) return;
+                textTotalProducts.setText(String.valueOf(totalProducts));
+                textLowStock.setText(String.valueOf(lowStock));
+                textTotalWarehouses.setText(String.valueOf(totalWarehouses));
+                textInventoryValue.setText(String.format(Locale.getDefault(), "%.2f zł", inventoryValue));
+                textTopProduct.setText(topProduct != null ? topProduct.name : noData);
+                textTopWarehouse.setText(topWarehouseName != null ? topWarehouseName : noData);
+            });
+        });
     }
 }

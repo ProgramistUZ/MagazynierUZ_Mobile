@@ -29,4 +29,11 @@ public interface ProductDao {
 
     @Query("SELECT * FROM products ORDER BY quantity DESC LIMIT 1")
     Product getTopProduct();
+
+    @Query("SELECT w.name FROM warehouses w " +
+           "INNER JOIN products p ON p.warehouseId = w.id " +
+           "GROUP BY w.id " +
+           "ORDER BY COUNT(p.id) DESC " +
+           "LIMIT 1")
+    String getTopWarehouseName();
 }

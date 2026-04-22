@@ -2,6 +2,8 @@ package com.example.magazynieruz_mobile.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -56,23 +58,29 @@ public class LoginFragment extends Fragment {
         }
 
         UserDao userDao = AppDatabase.getInstance(requireContext()).userDao();
-        User user = userDao.findByUsername(username);
+        Handler mainHandler = new Handler(Looper.getMainLooper());
 
-        if (user == null) {
-            Toast.makeText(getContext(), R.string.error_user_not_found, Toast.LENGTH_SHORT).show();
-            return;
-        }
+        AppDatabase.databaseExecutor.execute(() -> {
+            User user = userDao.findByUsername(username);
+            String hashedPassword = user != null ? hashPassword(password) : null;
+            boolean passwordMatches = user != null && user.passwordHash.equals(hashedPassword);
 
-        String hashedPassword = hashPassword(password);
-        if (!user.passwordHash.equals(hashedPassword)) {
-            Toast.makeText(getContext(), R.string.error_wrong_password, Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        Intent intent = new Intent(getContext(), MainActivity.class);
-        intent.putExtra("username", username);
-        startActivity(intent);
-        requireActivity().finish();
+            mainHandler.post(() -> {
+                if (!isAdded()) return;
+                if (user == null) {
+                    Toast.makeText(getContext(), R.string.error_user_not_found, Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if (!passwordMatches) {
+                    Toast.makeText(getContext(), R.string.error_wrong_password, Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                Intent intent = new Intent(getContext(), MainActivity.class);
+                intent.putExtra("username", username);
+                startActivity(intent);
+                requireActivity().finish();
+            });
+        });
     }
 
     private String hashPassword(String password) {

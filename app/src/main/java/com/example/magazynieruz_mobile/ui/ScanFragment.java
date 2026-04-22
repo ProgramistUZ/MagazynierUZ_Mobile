@@ -46,6 +46,7 @@ public class ScanFragment extends Fragment {
     private MaterialCardView cardScanResult;
     private ExecutorService analysisExecutor;
     private BarcodeScanner barcodeScanner;
+    private ProcessCameraProvider cameraProvider;
     private boolean scanning = false;
 
     private final ActivityResultLauncher<String> cameraPermissionLauncher =
@@ -88,6 +89,12 @@ public class ScanFragment extends Fragment {
             }
         });
 
+        if (!isHidden()) {
+            ensureCamera();
+        }
+    }
+
+    private void ensureCamera() {
         if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.CAMERA)
                 == PackageManager.PERMISSION_GRANTED) {
             startCamera();
@@ -102,7 +109,7 @@ public class ScanFragment extends Fragment {
 
         cameraProviderFuture.addListener(() -> {
             try {
-                ProcessCameraProvider cameraProvider = cameraProviderFuture.get();
+                cameraProvider = cameraProviderFuture.get();
 
                 Preview preview = new Preview.Builder().build();
                 preview.setSurfaceProvider(previewView.getSurfaceProvider());
@@ -157,8 +164,25 @@ public class ScanFragment extends Fragment {
     }
 
     @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if (hidden) {
+            scanning = false;
+            cardScanResult.setVisibility(View.GONE);
+            if (cameraProvider != null) {
+                cameraProvider.unbindAll();
+            }
+        } else {
+            ensureCamera();
+        }
+    }
+
+    @Override
     public void onDestroyView() {
         super.onDestroyView();
+        if (cameraProvider != null) {
+            cameraProvider.unbindAll();
+        }
         if (analysisExecutor != null) {
             analysisExecutor.shutdown();
         }

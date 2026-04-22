@@ -4,6 +4,8 @@ import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -66,12 +68,27 @@ public class WarehouseFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         warehouseDao = AppDatabase.getInstance(requireContext()).warehouseDao();
-        allWarehouses = warehouseDao.getAllWarehouses();
+        allWarehouses = new ArrayList<>();
 
         setupMap(view);
         setupRecycler(view);
-        setupSpinner(view);
         requestLocationPermission();
+
+        Handler mainHandler = new Handler(Looper.getMainLooper());
+        AppDatabase.databaseExecutor.execute(() -> {
+            List<Warehouse> loaded = warehouseDao.getAllWarehouses();
+            mainHandler.post(() -> {
+                if (!isAdded()) return;
+                allWarehouses = loaded;
+                if (!allWarehouses.isEmpty()) {
+                    Warehouse first = allWarehouses.get(0);
+                    mapView.getController().setCenter(new GeoPoint(first.latitude, first.longitude));
+                }
+                addWarehouseMarkers(allWarehouses);
+                adapter.updateData(allWarehouses);
+                setupSpinner(view);
+            });
+        });
     }
 
     private void setupMap(View view) {
@@ -81,15 +98,7 @@ public class WarehouseFragment extends Fragment {
 
         IMapController controller = mapView.getController();
         controller.setZoom(12.0);
-
-        if (!allWarehouses.isEmpty()) {
-            Warehouse first = allWarehouses.get(0);
-            controller.setCenter(new GeoPoint(first.latitude, first.longitude));
-        } else {
-            controller.setCenter(new GeoPoint(51.9356, 15.5062)); // Zielona Góra
-        }
-
-        addWarehouseMarkers(allWarehouses);
+        controller.setCenter(new GeoPoint(51.9356, 15.5062)); // Zielona Góra
     }
 
     private void addWarehouseMarkers(List<Warehouse> warehouses) {
@@ -113,6 +122,7 @@ public class WarehouseFragment extends Fragment {
     private void setupRecycler(View view) {
         RecyclerView recycler = view.findViewById(R.id.recyclerWarehouses);
         recycler.setLayoutManager(new LinearLayoutManager(requireContext()));
+        recycler.setHasFixedSize(true);
         adapter = new WarehouseAdapter(new ArrayList<>(allWarehouses));
         recycler.setAdapter(adapter);
     }
@@ -180,13 +190,24 @@ public class WarehouseFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        if (mapView != null) mapView.onResume();
+        if (mapView != null && !isHidden()) mapView.onResume();
     }
 
     @Override
     public void onPause() {
         super.onPause();
         if (mapView != null) mapView.onPause();
+    }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if (mapView == null) return;
+        if (hidden) {
+            mapView.onPause();
+        } else {
+            mapView.onResume();
+        }
     }
 
     @Override
