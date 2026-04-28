@@ -136,8 +136,8 @@ public class WarehouseFragment extends Fragment {
         }
 
         ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(
-                requireContext(), android.R.layout.simple_spinner_item, spinnerItems);
-        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                requireContext(), R.layout.item_spinner, spinnerItems);
+        spinnerAdapter.setDropDownViewResource(R.layout.item_spinner_dropdown);
         spinner.setAdapter(spinnerAdapter);
 
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {

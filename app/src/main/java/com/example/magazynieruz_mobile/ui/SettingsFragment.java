@@ -52,8 +52,8 @@ public class SettingsFragment extends Fragment {
         Spinner spinnerTheme = view.findViewById(R.id.spinnerTheme);
         String[] themes = {"MOTYW — Jasny", "MOTYW — Ciemny", "MOTYW — Systemowy"};
         ArrayAdapter<String> themeAdapter = new ArrayAdapter<>(
-                requireContext(), android.R.layout.simple_spinner_item, themes);
-        themeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                requireContext(), R.layout.item_spinner, themes);
+        themeAdapter.setDropDownViewResource(R.layout.item_spinner_dropdown);
         spinnerTheme.setAdapter(themeAdapter);
         spinnerTheme.setSelection(prefs.getInt("theme", 2), false);
         spinnerTheme.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
