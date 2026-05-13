@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="brand_yellow">#FFFDC700</color>
+    <color name="brand_yellow_pressed">#FFFFD633</color>
+    <color name="brand_yellow_ripple">#40FDC700</color>
+
+    <color name="bg_primary">#FF121212</color>
+    <color name="bg_surface">#FF1E1E1E</color>
+    <color name="bg_surface_elevated">#FF242424</color>
+    <color name="divider">#FF2E2E2E</color>
+
+    <color name="text_primary">#FFF2F2F2</color>
+    <color name="text_secondary">#FFB3B3B3</color>
+    <color name="text_hint">#8AF2F2F2</color>
+    <color name="text_on_accent">#FF000000</color>
+
+    <color name="nav_icon_selected">#FFFDC700</color>
+    <color name="nav_icon_unselected">#FF7A7A7A</color>
+
+    <color name="status_bar">#FF121212</color>
+
+    <color name="background_white">@color/bg_primary</color>
+    <color name="input_background">@color/bg_surface</color>
+    <color name="button_primary">@color/brand_yellow</color>
+    <color name="tab_indicator">@color/brand_yellow</color>
+</resources>

@@ -20,4 +20,35 @@
     <string name="nav_notifications">Powiadomienia</string>
     <string name="nav_settings">Ustawienia</string>
     <string name="btn_logout">WYLOGUJ</string>
+
+    <!-- Dashboard stats -->
+    <string name="stat_total_products">Total product</string>
+    <string name="stat_low_stock">Low stock</string>
+    <string name="stat_top_warehouse">Top magazyn</string>
+    <string name="stat_top_product">Top produkt</string>
+    <string name="stat_total_warehouses">Total warehouses</string>
+    <string name="stat_inventory_value">Inventory value</string>
+
+    <!-- Settings -->
+    <string name="settings_theme">MOTYW</string>
+    <string name="settings_push">POWIADOMIENIA PUSH</string>
+    <string name="settings_sms">POWIADOMIENIA SMS</string>
+    <string name="settings_email">POWIADOMIENIA MAILOWE</string>
+    <string name="btn_reset_password">RESET HASŁA</string>
+    <string name="btn_export_pdf">EKSPORT RAPORTU DO PDF</string>
+
+    <!-- Warehouse -->
+    <string name="all_warehouses">All warehouses</string>
+    <string name="warehouse_list">Lista magazynów</string>
+
+    <!-- Scan -->
+    <string name="btn_scan">SCAN</string>
+    <string name="camera_permission_required">Wymagane uprawnienie kamery</string>
+
+    <!-- Notifications -->
+    <string name="no_notifications">Brak powiadomień</string>
+
+    <!-- General -->
+    <string name="all_products">All products</string>
+    <string name="no_data">-</string>
 </resources>

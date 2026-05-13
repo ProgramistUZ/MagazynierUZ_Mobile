@@ -1,6 +1,8 @@
 package com.example.magazynieruz_mobile.ui;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -63,21 +65,30 @@ public class RegisterFragment extends Fragment {
         }
 
         UserDao userDao = AppDatabase.getInstance(requireContext()).userDao();
+        Handler mainHandler = new Handler(Looper.getMainLooper());
 
-        if (userDao.findByUsername(username) != null) {
-            Toast.makeText(getContext(), R.string.error_username_taken, Toast.LENGTH_SHORT).show();
-            return;
-        }
+        AppDatabase.databaseExecutor.execute(() -> {
+            boolean taken = userDao.findByUsername(username) != null;
+            if (taken) {
+                mainHandler.post(() -> {
+                    if (!isAdded()) return;
+                    Toast.makeText(getContext(), R.string.error_username_taken, Toast.LENGTH_SHORT).show();
+                });
+                return;
+            }
 
-        User user = new User();
-        user.username = username;
-        user.passwordHash = hashPassword(password);
-        userDao.insertUser(user);
+            User user = new User();
+            user.username = username;
+            user.passwordHash = hashPassword(password);
+            userDao.insertUser(user);
 
-        Toast.makeText(getContext(), R.string.success_registration, Toast.LENGTH_SHORT).show();
-
-        ViewPager2 viewPager = requireActivity().findViewById(R.id.viewPager);
-        viewPager.setCurrentItem(0);
+            mainHandler.post(() -> {
+                if (!isAdded()) return;
+                Toast.makeText(getContext(), R.string.success_registration, Toast.LENGTH_SHORT).show();
+                ViewPager2 viewPager = requireActivity().findViewById(R.id.viewPager);
+                viewPager.setCurrentItem(0);
+            });
+        });
     }
 
     private String hashPassword(String password) {
