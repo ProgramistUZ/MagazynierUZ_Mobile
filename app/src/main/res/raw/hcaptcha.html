@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://hcaptcha.com/1/api.js" async defer></script>
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            background: transparent;
+            font-family: sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 78px;
+        }
+    </style>
+</head>
+<body>
+    <div class="h-captcha"
+         data-sitekey="10000000-ffff-ffff-ffff-000000000001"
+         data-callback="onSuccess"
+         data-expired-callback="onExpired"
+         data-error-callback="onError"
+         data-theme="light"></div>
+
+    <script>
+        function onSuccess(token) {
+            if (window.AndroidCaptcha) AndroidCaptcha.onSuccess(token);
+        }
+        function onExpired() {
+            if (window.AndroidCaptcha) AndroidCaptcha.onExpired();
+        }
+        function onError(err) {
+            if (window.AndroidCaptcha) AndroidCaptcha.onError(String(err));
+        }
+    </script>
+</body>
+</html>

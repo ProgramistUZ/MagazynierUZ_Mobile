@@ -9,7 +9,7 @@ import androidx.room.RoomDatabase;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-@Database(entities = {User.class, Warehouse.class, Product.class}, version = 2)
+@Database(entities = {User.class, Warehouse.class, Product.class, AppNotification.class}, version = 3)
 public abstract class AppDatabase extends RoomDatabase {
 
     private static volatile AppDatabase INSTANCE;
@@ -21,6 +21,8 @@ public abstract class AppDatabase extends RoomDatabase {
     public abstract WarehouseDao warehouseDao();
 
     public abstract ProductDao productDao();
+
+    public abstract NotificationDao notificationDao();
 
     public static AppDatabase getInstance(Context context) {
         if (INSTANCE == null) {

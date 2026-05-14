@@ -52,6 +52,14 @@
         android:textCursorDrawable="@null"
         android:textSize="18sp" />
 
+    <WebView
+        android:id="@+id/captchaWebView"
+        android:layout_width="match_parent"
+        android:layout_height="90dp"
+        android:layout_below="@id/editConfirmPassword"
+        android:layout_marginTop="20dp"
+        android:background="@android:color/transparent" />
+
     <Button
         android:id="@+id/btnRegister"
         android:layout_width="match_parent"

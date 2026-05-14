@@ -24,6 +24,9 @@ public interface ProductDao {
     @Query("SELECT COUNT(*) FROM products WHERE quantity < 10")
     int getLowStockCount();
 
+    @Query("SELECT * FROM products WHERE quantity < 10 ORDER BY quantity ASC")
+    List<Product> getLowStockProducts();
+
     @Query("SELECT SUM(quantity * price) FROM products")
     double getTotalInventoryValue();
 

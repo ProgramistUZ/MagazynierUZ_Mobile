@@ -6,6 +6,7 @@ import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -19,6 +20,7 @@ import com.example.magazynieruz_mobile.R;
 import com.example.magazynieruz_mobile.data.AppDatabase;
 import com.example.magazynieruz_mobile.data.User;
 import com.example.magazynieruz_mobile.data.UserDao;
+import com.example.magazynieruz_mobile.util.Captcha;
 
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
@@ -29,6 +31,7 @@ public class RegisterFragment extends Fragment {
     private EditText editLogin;
     private EditText editPassword;
     private EditText editConfirmPassword;
+    private String captchaToken;
 
     @Nullable
     @Override
@@ -46,6 +49,9 @@ public class RegisterFragment extends Fragment {
         editConfirmPassword = view.findViewById(R.id.editConfirmPassword);
         Button btnRegister = view.findViewById(R.id.btnRegister);
 
+        WebView captchaWebView = view.findViewById(R.id.captchaWebView);
+        Captcha.attach(captchaWebView, token -> captchaToken = token);
+
         btnRegister.setOnClickListener(v -> attemptRegister());
     }
 
@@ -61,6 +67,11 @@ public class RegisterFragment extends Fragment {
 
         if (!password.equals(confirmPassword)) {
             Toast.makeText(getContext(), R.string.error_passwords_mismatch, Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if (captchaToken == null || captchaToken.isEmpty()) {
+            Toast.makeText(getContext(), R.string.error_captcha_wrong, Toast.LENGTH_SHORT).show();
             return;
         }
 
