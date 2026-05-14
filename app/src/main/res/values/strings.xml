@@ -51,4 +51,29 @@
     <!-- General -->
     <string name="all_products">All products</string>
     <string name="no_data">-</string>
+
+    <!-- Captcha -->
+    <string name="error_captcha_wrong">Najpierw rozwiąż captcha</string>
+
+    <!-- Push -->
+    <string name="btn_test_push">PUSH</string>
+    <string name="btn_clear">WYCZYŚĆ</string>
+    <string name="push_test_title">Powiadomienie testowe</string>
+    <string name="push_test_message">To jest przykładowe powiadomienie push.</string>
+    <string name="push_disabled">Powiadomienia push są wyłączone</string>
+
+    <!-- SMS / Fall -->
+    <string name="settings_sms_number">NUMER KIEROWNIKA / DOSTAWCY</string>
+    <string name="hint_sms_number">+48...</string>
+    <string name="btn_send_low_stock_alert">WYŚLIJ ALERT O BRAKACH</string>
+    <string name="sms_no_low_stock">Brak produktów z niskim stanem</string>
+    <string name="settings_fall_detection">DETEKCJA UPADKU</string>
+    <string name="sms_no_number">Najpierw ustaw numer SMS</string>
+    <string name="sms_disabled">Powiadomienia SMS są wyłączone</string>
+    <string name="sms_sent">Raport SMS wysłany</string>
+    <string name="sms_failed">Nie udało się wysłać SMS</string>
+    <string name="sms_permission_required">Wymagane uprawnienie do wysyłania SMS</string>
+
+    <!-- Widget -->
+    <string name="widget_refresh">Odśwież</string>
 </resources>

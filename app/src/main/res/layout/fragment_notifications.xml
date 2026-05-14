@@ -4,12 +4,73 @@
     android:layout_height="match_parent"
     android:background="@color/bg_primary">
 
+    <LinearLayout
+        android:id="@+id/notifHeader"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingStart="20dp"
+        android:paddingEnd="12dp"
+        android:paddingTop="20dp"
+        android:paddingBottom="8dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/nav_notifications"
+            android:textColor="@color/text_primary"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:letterSpacing="0.08"
+            android:textAllCaps="true" />
+
+        <Button
+            android:id="@+id/btnTestPush"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_button_primary"
+            android:minWidth="80dp"
+            android:padding="6dp"
+            android:text="@string/btn_test_push"
+            android:textColor="@color/text_on_accent"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:textAllCaps="true" />
+
+        <Button
+            android:id="@+id/btnClearNotifs"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="6dp"
+            android:background="@drawable/bg_button_primary"
+            android:minWidth="80dp"
+            android:padding="6dp"
+            android:text="@string/btn_clear"
+            android:textColor="@color/text_on_accent"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:textAllCaps="true" />
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerNotifications"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/notifHeader"
+        android:paddingBottom="16dp"
+        android:clipToPadding="false" />
+
     <TextView
+        android:id="@+id/textEmptyNotifs"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:text="@string/no_notifications"
         android:textColor="@color/text_secondary"
-        android:textSize="16sp" />
+        android:textSize="16sp"
+        android:visibility="gone" />
 
 </RelativeLayout>
